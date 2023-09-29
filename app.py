@@ -8,7 +8,7 @@ def calculate_bju():
     height = float(request.args.get('bju_height'))
     age = float(request.args.get('bju_age'))
     gender = request.args.get('bju_gender')
-    percent_fat = float(request.args.get('bju_percent'))
+    percent_fat = float(request.args.get('bju_percent')) / 100
     activity = float(request.args.get('bju_activity'))
 
     # Расчет калорий
