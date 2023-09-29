@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 @app.route('/cbju', methods=['GET'])
 def calculate_bju():
+    goal = request.args.get('bju_goal')
     weight = float(request.args.get('bju_weight'))
     height = float(request.args.get('bju_height'))
     age = float(request.args.get('bju_age'))
@@ -39,6 +40,12 @@ def calculate_bju():
 
     # Расчет потребности в клетчатке
     fiber = 38 if gender == 'Мужской' else 25
+
+    # Адаптация калорий в зависимости от цели
+    if goal == 'Дефицит':
+        calories *= 0.8  # уменьшение калорий на 20%
+    elif goal == 'Профицит':
+        calories *= 1.1  # увеличение калорий на 10%
     
     result = {
         'bmr': round(bmr),
