@@ -56,11 +56,11 @@ def calculate_bju():
         protein = lean_mass * 2
         fat = lean_mass * 1
         #carbs = (calories - (protein * 4 + fat * 9)) / 4
-        carbs = calories - protein - fat
+        carbs = (calories - (protein * 4 + fat * 9)) / 4
     elif goal == 'Поддержка':
         protein = lean_mass * 2
         fat = lean_mass * 1
-        carbs = calories - protein - fat
+        carbs = (calories - (protein * 4 + fat * 9)) / 4
         
     
     result = {
