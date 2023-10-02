@@ -50,7 +50,7 @@ def calculate_bju():
         calories *= 0.8  # уменьшение калорий на 20%
         protein = lean_mass * 2.2
         fat = lean_mass * 1
-        carbs = calories - protein - fat
+        carbs = (calories - (protein * 4 + fat * 9)) / 4
     elif goal == 'Профицит':
         calories *= 1.2  # увеличение калорий на 20%
         protein = lean_mass * 2
