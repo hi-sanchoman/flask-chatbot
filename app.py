@@ -40,10 +40,10 @@ def calculate_bju():
     bmi = weight / ((height / 100) ** 2)
 
     # Вода, клетчатка, соль и кофеин
-    water = lean_mass % 20
-    fiber = calories % 1000 * 10
-    salt = lean_mass % 10 * 1
-    caffeine = lean_mass * 2.5
+    water = lean_mass / 20
+    fiber = calories / 1000 * 10
+    salt = lean_mass / 10 * 1
+    caffeine = weight * 2.5
 
     # Адаптация калорий в зависимости от цели
     if goal == 'Дефицит':
