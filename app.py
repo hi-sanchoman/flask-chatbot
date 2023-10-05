@@ -92,14 +92,19 @@ def calculate_bju():
     percent_fat = float(request.args.get('bju_percent')) / 100
     activity = float(request.args.get('bju_activity'))
 
+    l_protein = 0
+    l_fat = 0
+    l_carbs = 0
+
+    # Расчет сухой массы
+    lean_mass = weight * (1 - percent_fat)
+
     # Расчет базального метаболизма
     if gender == 'Мужской':
         bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
     else:
         bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
 
-    # Расчет сухой массы
-    lean_mass = weight * (1 - percent_fat)
 
     # Расчет термического эффекта пищи (TEF)
     tef = bmr * 0.1
@@ -121,7 +126,6 @@ def calculate_bju():
 
     # Вода, клетчатка, соль и кофеин
     water = lean_mass / 20
-    fiber = calories / 1000 * 10
     salt = lean_mass / 10 * 1
     caffeine = weight * 2.5
 
@@ -131,17 +135,26 @@ def calculate_bju():
         protein = lean_mass * 2.2
         fat = lean_mass * 1
         carbs = (calories - (protein * 4 + fat * 9)) / 4
+        fiber = calories / 1000 * 10
     elif goal == 'Профицит':
         calories *= 1.2  # увеличение калорий на 20%
         protein = lean_mass * 2
         fat = lean_mass * 1
         #carbs = (calories - (protein * 4 + fat * 9)) / 4
         carbs = (calories - (protein * 4 + fat * 9)) / 4
+        fiber = calories / 1000 * 10
     elif goal == 'Поддержка':
         protein = lean_mass * 2
         fat = lean_mass * 1
         carbs = (calories - (protein * 4 + fat * 9)) / 4
-        
+        fiber = calories / 1000 * 10
+
+    # Расчет базального метаболизма
+    if gender == 'Женский':
+        l_protein = lean_mass * 2
+        l_fat = lean_mass * 1.4
+        l_carbs = (calories - (l_protein * 4 + l_fat * 9)) / 4
+    
     
     result = {
         'bmr': round(bmr),
@@ -155,7 +168,10 @@ def calculate_bju():
         'water': round(water, 2),
         'caffeine': caffeine,  # максимальное рекомендуемое потребление кофеина
         'fiber': fiber,
-        'salt': salt  # рекомендуемое потребление соли
+        'salt': salt,
+        'l_protein': l_protein,
+        'l_fat': l_fat,
+        'l_carbs': l_carbs
     }
 
     return jsonify(result)
