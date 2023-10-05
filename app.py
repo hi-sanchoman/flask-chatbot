@@ -42,7 +42,7 @@ def calculate_fat():
     best_match, similarity = template_matching(source_image_url, template_image_urls)
 
     result = {
-        'best_match': best_match
+        'best_match': best_match,
         'fat': round(similarity)
     }
 
