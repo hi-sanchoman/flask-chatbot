@@ -1,2 +1,5 @@
 Flask
 Gunicorn
+cv2
+numpy
+requests
