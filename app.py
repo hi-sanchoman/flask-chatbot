@@ -166,12 +166,12 @@ def calculate_bju():
         'carbs': round(carbs),
         'bmi': round(bmi, 2),
         'water': round(water, 2),
-        'caffeine': caffeine,  # максимальное рекомендуемое потребление кофеина
-        'fiber': fiber,
-        'salt': salt,
-        'l_protein': l_protein,
-        'l_fat': l_fat,
-        'l_carbs': l_carbs
+        'caffeine': round(caffeine, 2),  # максимальное рекомендуемое потребление кофеина
+        'fiber': round(fiber, 2),
+        'salt': round(salt, 2),
+        'l_protein': round(l_protein),
+        'l_fat': round(l_fat),
+        'l_carbs': round(l_carbs)
     }
 
     return jsonify(result)
