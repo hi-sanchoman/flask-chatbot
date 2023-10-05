@@ -1,6 +1,56 @@
 from flask import Flask, request, jsonify
+import cv2
+import numpy as np
+import requests
 
 app = Flask(__name__)
+
+# Detect fat %
+
+def fetch_image_from_url(url):
+    response = requests.get(url)
+    image_arr = np.asarray(bytearray(response.content), dtype=np.uint8)
+    image = cv2.imdecode(image_arr, -1)  # Loads image as it is, including alpha channel if present
+    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+
+def template_matching(source_image_url, template_image_urls):
+    # Fetch the source image from the URL
+    source_image = fetch_image_from_url(source_image_url)
+
+    max_similarity = -np.inf  # Initialize with a very low value
+    best_match_url = None
+
+    # Loop through each template and compute similarity
+    for template_url in template_image_urls:
+        template = fetch_image_from_url(template_url)
+        res = cv2.matchTemplate(source_image, template, cv2.TM_CCOEFF_NORMED)
+
+        if np.max(res) > max_similarity:
+            max_similarity = np.max(res)
+            best_match_url = template_url
+
+    # Convert the max similarity to a percentage
+    similarity_percentage = max_similarity * 100
+
+    return best_match_url, similarity_percentage
+
+
+@app.route('/fat', methods=['GET'])
+def calculate_fat():
+    source_image_url = request.args.get('source_image')
+    template_image_urls = ['https://www.dropbox.com/scl/fi/aki52ncfe66p2eqp0slv6/35.png?rlkey=8c9s6bont2kjow8cl2fp7w7os&dl=1']  # Add as many URLs as needed
+    best_match, similarity = template_matching(source_image_url, template_image_urls)
+
+    result = {
+        'best_match': best_match
+        'fat': round(similarity)
+    }
+
+    return jsonify(result)
+
+
+
+
 
 @app.route('/cbju', methods=['GET'])
 def calculate_bju():
