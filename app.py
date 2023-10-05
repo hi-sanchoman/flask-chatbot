@@ -53,7 +53,7 @@ def estimate_fat_percentage(source_image_url, templates):
             best_match_percentage = max_similarity
             best_match_fat = fat_percentage
 
-    estimated_fat = best_match_fat * (best_match_percentage / 100)
+    estimated_fat = best_match_fat * (best_match_percentage)
     return estimated_fat
 
 
