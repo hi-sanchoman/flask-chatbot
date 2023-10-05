@@ -38,16 +38,42 @@ def template_matching(source_image_url, template_image_urls):
 
     return best_match_url, similarity_percentage
 
+def estimate_fat_percentage(source_image_url, templates):
+    source_image = fetch_image_from_url(source_image_url)
+    
+    best_match_percentage = 0
+    best_match_fat = 0
+
+    for template_url, fat_percentage in templates.items():
+        template = fetch_image_from_url(template_url)
+        res = cv2.matchTemplate(source_image, template, cv2.TM_CCOEFF_NORMED)
+        max_similarity = np.max(res)
+
+        if max_similarity > best_match_percentage:
+            best_match_percentage = max_similarity
+            best_match_fat = fat_percentage
+
+    estimated_fat = best_match_fat * (best_match_percentage / 100)
+    return estimated_fat
+
+
+templates = {
+    "https://cdn.discordapp.com/attachments/1053759410297634906/1159574302459441152/Screenshot_2023-10-06_at_01.02.27.png?ex=653184b9&is=651f0fb9&hm=1ace1623419634ff78769c5347c1d93d2fd4b1aca4e6665620a4d7fb2d83e1cc&": 35, 
+    "https://cdn.discordapp.com/attachments/1053759410297634906/1159574650024640742/Screenshot_2023-10-06_at_01.02.36.png?ex=6531850c&is=651f100c&hm=6afc8664f57fe27cda288511a4800c6e77cf890ad42477314524d7e6e4e1eaec&": 25,
+    "https://cdn.discordapp.com/attachments/1053759410297634906/1159576164717826089/Screenshot_2023-10-06_at_01.02.51.png?ex=65318675&is=651f1175&hm=76916c91f6ca621a62f963e61af414b9a1631db821408145685a573afc3b1954&": 20
+    # ... Add more templates as needed
+}
 
 @app.route('/fat', methods=['GET'])
 def calculate_fat():
     source_image_url = request.args.get('source_image')
-    template_image_urls = ['https://cdn.discordapp.com/attachments/1053759410297634906/1159574302459441152/Screenshot_2023-10-06_at_01.02.27.png?ex=653184b9&is=651f0fb9&hm=1ace1623419634ff78769c5347c1d93d2fd4b1aca4e6665620a4d7fb2d83e1cc&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159574650024640742/Screenshot_2023-10-06_at_01.02.36.png?ex=6531850c&is=651f100c&hm=6afc8664f57fe27cda288511a4800c6e77cf890ad42477314524d7e6e4e1eaec&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159576164717826089/Screenshot_2023-10-06_at_01.02.51.png?ex=65318675&is=651f1175&hm=76916c91f6ca621a62f963e61af414b9a1631db821408145685a573afc3b1954&']  # Add as many URLs as needed
-    best_match, similarity = template_matching(source_image_url, template_image_urls)
+    #template_image_urls = ['https://cdn.discordapp.com/attachments/1053759410297634906/1159574302459441152/Screenshot_2023-10-06_at_01.02.27.png?ex=653184b9&is=651f0fb9&hm=1ace1623419634ff78769c5347c1d93d2fd4b1aca4e6665620a4d7fb2d83e1cc&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159574650024640742/Screenshot_2023-10-06_at_01.02.36.png?ex=6531850c&is=651f100c&hm=6afc8664f57fe27cda288511a4800c6e77cf890ad42477314524d7e6e4e1eaec&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159576164717826089/Screenshot_2023-10-06_at_01.02.51.png?ex=65318675&is=651f1175&hm=76916c91f6ca621a62f963e61af414b9a1631db821408145685a573afc3b1954&']  # Add as many URLs as needed
+    #best_match, similarity = template_matching(source_image_url, template_image_urls)
+
+    estimated_fat = estimate_fat_percentage(source_image_url, templates)
 
     result = {
-        'best_match': best_match,
-        'fat': round(similarity)
+        'fat': estimated_fat
     }
 
     return jsonify(result)
