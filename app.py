@@ -11,6 +11,10 @@ def fetch_image_from_url(url):
     response = requests.get(url)
     image_arr = np.asarray(bytearray(response.content), dtype=np.uint8)
     image = cv2.imdecode(image_arr, -1)  # Loads image as it is, including alpha channel if present
+    
+    #if 'image' not in response.headers.get('content-type'):
+    #    raise ValueError("URL did not return an image " + response.headers.get('content-type'))
+    
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
 
 def template_matching(source_image_url, template_image_urls):
@@ -38,7 +42,7 @@ def template_matching(source_image_url, template_image_urls):
 @app.route('/fat', methods=['GET'])
 def calculate_fat():
     source_image_url = request.args.get('source_image')
-    template_image_urls = ['https://www.dropbox.com/scl/fi/aki52ncfe66p2eqp0slv6/35.png?rlkey=8c9s6bont2kjow8cl2fp7w7os&dl=1']  # Add as many URLs as needed
+    template_image_urls = ['https://cdn.discordapp.com/attachments/1053759410297634906/1159574302459441152/Screenshot_2023-10-06_at_01.02.27.png?ex=653184b9&is=651f0fb9&hm=1ace1623419634ff78769c5347c1d93d2fd4b1aca4e6665620a4d7fb2d83e1cc&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159574650024640742/Screenshot_2023-10-06_at_01.02.36.png?ex=6531850c&is=651f100c&hm=6afc8664f57fe27cda288511a4800c6e77cf890ad42477314524d7e6e4e1eaec&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159576164717826089/Screenshot_2023-10-06_at_01.02.51.png?ex=65318675&is=651f1175&hm=76916c91f6ca621a62f963e61af414b9a1631db821408145685a573afc3b1954&']  # Add as many URLs as needed
     best_match, similarity = template_matching(source_image_url, template_image_urls)
 
     result = {
