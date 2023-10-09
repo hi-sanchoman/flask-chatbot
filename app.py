@@ -53,22 +53,7 @@ def estimate_fat_percentage(source_image_url, templates):
     #         best_match_percentage = max_similarity
     #         best_match_fat = fat_percentage
 
-    # estimated_fat = best_match_fat * (best_match_percentage)
-
-    age = float(request.args.get('bju_age'))
-    weight = float(request.args.get('bju_weight'))
-    height = float(request.args.get('bju_height'))
-    gender = request.args.get('bju_gender')
-
-    bmi = weight / ((height / 100) ** 2)
-    
-    bfp = 0
-    
-    if gender == 'Мужской':
-        bfp = 1.20 * bmi + 0.23 * age - 16.2
-    else:
-        bfp = 1.20 * bmi + 0.23 * age - 5.4
-    
+    # bfp = best_match_fat * (best_match_percentage)
     return bfp
 
 
@@ -98,10 +83,24 @@ def calculate_fat():
     #template_image_urls = ['https://cdn.discordapp.com/attachments/1053759410297634906/1159574302459441152/Screenshot_2023-10-06_at_01.02.27.png?ex=653184b9&is=651f0fb9&hm=1ace1623419634ff78769c5347c1d93d2fd4b1aca4e6665620a4d7fb2d83e1cc&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159574650024640742/Screenshot_2023-10-06_at_01.02.36.png?ex=6531850c&is=651f100c&hm=6afc8664f57fe27cda288511a4800c6e77cf890ad42477314524d7e6e4e1eaec&', 'https://cdn.discordapp.com/attachments/1053759410297634906/1159576164717826089/Screenshot_2023-10-06_at_01.02.51.png?ex=65318675&is=651f1175&hm=76916c91f6ca621a62f963e61af414b9a1631db821408145685a573afc3b1954&']  # Add as many URLs as needed
     #best_match, similarity = template_matching(source_image_url, template_image_urls)
 
-    estimated_fat = estimate_fat_percentage(source_image_url, templates)
+    age = float(request.args.get('bju_age'))
+    weight = float(request.args.get('bju_weight'))
+    height = float(request.args.get('bju_height'))
+    gender = request.args.get('bju_gender')
+
+    bmi = weight / ((height / 100) ** 2)
+    
+    bfp = 0
+    
+    if gender == 'Мужской':
+        bfp = 1.20 * bmi + 0.23 * age - 16.2
+    else:
+        bfp = 1.20 * bmi + 0.23 * age - 5.4
+
+    # estimated_fat = estimate_fat_percentage(source_image_url, templates)
 
     result = {
-        'fat': estimated_fat
+        'fat': bfp
     }
 
     return jsonify(result)
