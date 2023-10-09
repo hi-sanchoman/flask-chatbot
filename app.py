@@ -159,7 +159,10 @@ def calculate_bju():
     # Адаптация калорий в зависимости от цели
     if goal == 'Дефицит':
         calories *= 0.8  # уменьшение калорий на 20%
-        protein = lean_mass * 2.2
+        if gender == 'Мужской':
+            protein = lean_mass * 2.2
+        else:
+            protein = lean_mass * 2
         fat = lean_mass * 1
         carbs = (calories - (protein * 4 + fat * 9)) / 4
         fiber = calories / 1000 * 10
