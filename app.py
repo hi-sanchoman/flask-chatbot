@@ -41,20 +41,35 @@ def template_matching(source_image_url, template_image_urls):
 def estimate_fat_percentage(source_image_url, templates):
     source_image = fetch_image_from_url(source_image_url)
     
-    best_match_percentage = 0
-    best_match_fat = 0
+    # best_match_percentage = 0
+    # best_match_fat = 0
 
-    for template_url, fat_percentage in templates.items():
-        template = fetch_image_from_url(template_url)
-        res = cv2.matchTemplate(source_image, template, cv2.TM_CCOEFF_NORMED)
-        max_similarity = np.max(res)
+    # for template_url, fat_percentage in templates.items():
+    #     template = fetch_image_from_url(template_url)
+    #     res = cv2.matchTemplate(source_image, template, cv2.TM_CCOEFF_NORMED)
+    #     max_similarity = np.max(res)
 
-        if max_similarity > best_match_percentage:
-            best_match_percentage = max_similarity
-            best_match_fat = fat_percentage
+    #     if max_similarity > best_match_percentage:
+    #         best_match_percentage = max_similarity
+    #         best_match_fat = fat_percentage
 
-    estimated_fat = best_match_fat * (best_match_percentage)
-    return estimated_fat
+    # estimated_fat = best_match_fat * (best_match_percentage)
+
+    age = float(request.args.get('bju_age'))
+    weight = float(request.args.get('bju_weight'))
+    height = float(request.args.get('bju_height'))
+    gender = request.args.get('bju_gender')
+
+    bmi = weight / ((height / 100) ** 2)
+    
+    bfp = 0
+    
+    if gender == 'Мужской':
+        bfp = 1.20 * bmi + 0.23 * age - 16.2
+    else:
+        bfp = 1.20 * bmi + 0.23 * age - 5.4
+    
+    return bfp
 
 
 templates = {
