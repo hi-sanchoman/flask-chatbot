@@ -58,10 +58,23 @@ def estimate_fat_percentage(source_image_url, templates):
 
 
 templates = {
-    "https://cdn.discordapp.com/attachments/1053759410297634906/1159574302459441152/Screenshot_2023-10-06_at_01.02.27.png?ex=653184b9&is=651f0fb9&hm=1ace1623419634ff78769c5347c1d93d2fd4b1aca4e6665620a4d7fb2d83e1cc&": 35, 
-    "https://cdn.discordapp.com/attachments/1053759410297634906/1159574650024640742/Screenshot_2023-10-06_at_01.02.36.png?ex=6531850c&is=651f100c&hm=6afc8664f57fe27cda288511a4800c6e77cf890ad42477314524d7e6e4e1eaec&": 25,
-    "https://cdn.discordapp.com/attachments/1053759410297634906/1159576164717826089/Screenshot_2023-10-06_at_01.02.51.png?ex=65318675&is=651f1175&hm=76916c91f6ca621a62f963e61af414b9a1631db821408145685a573afc3b1954&": 20
+    #"https://cdn.discordapp.com/attachments/1053759410297634906/1159574302459441152/Screenshot_2023-10-06_at_01.02.27.png?ex=653184b9&is=651f0fb9&hm=1ace1623419634ff78769c5347c1d93d2fd4b1aca4e6665620a4d7fb2d83e1cc&": 35, 
+    #"https://cdn.discordapp.com/attachments/1053759410297634906/1159574650024640742/Screenshot_2023-10-06_at_01.02.36.png?ex=6531850c&is=651f100c&hm=6afc8664f57fe27cda288511a4800c6e77cf890ad42477314524d7e6e4e1eaec&": 25,
+    #"https://cdn.discordapp.com/attachments/1053759410297634906/1159576164717826089/Screenshot_2023-10-06_at_01.02.51.png?ex=65318675&is=651f1175&hm=76916c91f6ca621a62f963e61af414b9a1631db821408145685a573afc3b1954&": 20
     # ... Add more templates as needed
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992674543829153/fat_08_2.png?ex=6536adaf&is=652438af&hm=29f7a56f359c243d46b5a3109132ae2a79caf22d1a916f6590dcc6dd614d947d&=&width=850&height=934": 8,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992674216689785/fat_08.png?ex=6536adaf&is=652438af&hm=c34b96b792ed3f55adaf48c044edd8d369c7c6aea729bc81abe6a8f89144543a&=&width=854&height=934": 8,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992611293737133/fat_10.png?ex=6536ada0&is=652438a0&hm=5b1393e0f2e75e0bda1748d9b446f1af8e16f88f506993e86a88037fa3e36c78&=&width=864&height=934": 10,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992611616686270/fat_10_2.png?ex=6536ada0&is=652438a0&hm=d28021bfdbfc9a313508c778fa255a3c828b66f5a439626df49b1446521edf60&=&width=834&height=934": 10,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992611901919342/fat_15.png?ex=6536ada0&is=652438a0&hm=29ef5fb110532e0c9893a592f66e6a6a173c11ca3af3e23f85085120a376683e&=&width=852&height=934": 15,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992612174540921/fat_15_2.png?ex=6536ada0&is=652438a0&hm=44745f68c68f76d684a7974765340391fa6e7468f023682e83c268493b16cd26&=&width=854&height=934": 15,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992612421996544/fat_20.png?ex=6536ada1&is=652438a1&hm=d7dcbdd7fc12bdb548a3656ee42eb2749ee641f2af1eaa55783bdd79bb6de774&=&width=854&height=934": 20,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992612669476945/fat_20_2.png?ex=6536ada1&is=652438a1&hm=58fe63ce8a2f2f865e48dc76fb2fabfe81a3bfa0cdf3483d305f4cccbafcb89c&=&width=850&height=934": 20,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992612916932618/fat_25.png?ex=6536ada1&is=652438a1&hm=3d5606ede7f2cbe8494bbad37286b879da40e90df302c5c9cbc9a54a6bf7056b&=&width=852&height=934": 25,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992613260857364/fat_25_2.png?ex=6536ada1&is=652438a1&hm=7e262576c81817569dd6f68eb1f998d952c3b4ea10512a31bcc9ca27a1024142&=&width=846&height=934": 25,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992613642555417/fat_30.png?ex=6536ada1&is=652438a1&hm=417bd5ed9cca91f9ad9320ee503f355efa82d8437195eeb079e10aa66a652a60&=&width=848&height=934": 30,
+    "https://media.discordapp.net/attachments/1053759410297634906/1160992613969702974/fat_35_2.png?ex=6536ada1&is=652438a1&hm=0a1840a0525d238af9f4fbc36700fabb97ed06fffb7309500c97c91ac067f197&=&width=844&height=934": 35,
+    
 }
 
 @app.route('/fat', methods=['GET'])
