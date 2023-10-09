@@ -183,6 +183,7 @@ def calculate_bju():
     if gender == 'Женский':
         l_protein = lean_mass * 2
         l_fat = lean_mass * 1.4
+        calories = calories + 200
         l_carbs = (calories - (l_protein * 4 + l_fat * 9)) / 4
     
     
