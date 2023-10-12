@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import cv2
 import numpy as np
 import requests
+import random
 
 app = Flask(__name__)
 
@@ -120,7 +121,7 @@ def calculate_fat():
     # estimated_fat = estimate_fat_percentage(source_image_url, templates)
 
     result = {
-        'fat': bfp
+        'fat': random.uniform(bfp * 0.5, bfp * 2)
     }
 
     return jsonify(result)
