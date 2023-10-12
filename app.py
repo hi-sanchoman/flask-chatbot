@@ -82,12 +82,12 @@ def get_bmi_color(bmi, height, weight):
     # Define BMI categories and corresponding colors
     # This is based on a general structure, you may need to adjust the values and colors based on your exact matrix.
     categories = {
-        'underweight': {'range': (0, 18.5), 'color': 'blue'},
-        'normal': {'range': (18.5, 24.9), 'color': 'green'},
-        'overweight': {'range': (25, 29.9), 'color': 'yellow'},
-        'obese': {'range': (30, 34.9), 'color': 'orange'},
-        'severely_obese': {'range': (35, 40), 'color': 'red'},
-        'very_severely_obese': {'range': (40, float('inf')), 'color': 'darkred'}
+        'underweight': {'range': (0, 18.5), 'color': 'Дефицит массы тела'},
+        'normal': {'range': (18.5, 24.9), 'color': 'Нормальная масса тела'},
+        'overweight': {'range': (25, 29.9), 'color': 'Избыточная масса тела'},
+        'obese': {'range': (30, 34.9), 'color': 'Ожирение 1 степени'},
+        'severely_obese': {'range': (35, 40), 'color': 'Ожирение 2 степени'},
+        'very_severely_obese': {'range': (40, float('inf')), 'color': 'Ожирение 3 степени'}
     }
 
     for category, details in categories.items():
