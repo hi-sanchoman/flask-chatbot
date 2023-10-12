@@ -154,7 +154,8 @@ def calculate_bju():
     # Вода, клетчатка, соль и кофеин
     water = lean_mass / 20
     salt = lean_mass / 10 * 1
-    caffeine = weight * 2.5
+    caffeine_from = weight * 2.5
+    caffeine_to = weight * 5
 
     # Адаптация калорий в зависимости от цели
     if goal == 'Дефицит':
@@ -197,7 +198,8 @@ def calculate_bju():
         'carbs': round(carbs),
         'bmi': round(bmi, 2),
         'water': round(water, 2),
-        'caffeine': round(caffeine, 2),  # максимальное рекомендуемое потребление кофеина
+        'caffeine_from': round(caffeine_from, 2), 
+        'caffeine_to': round(caffeine_to, 2), 
         'fiber': round(fiber, 2),
         'salt': round(salt, 2),
         'l_protein': round(l_protein),
