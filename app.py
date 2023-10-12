@@ -77,6 +77,26 @@ templates = {
     
 }
 
+
+def get_bmi_color(bmi, height, weight):
+    # Define BMI categories and corresponding colors
+    # This is based on a general structure, you may need to adjust the values and colors based on your exact matrix.
+    categories = {
+        'underweight': {'range': (0, 18.5), 'color': 'blue'},
+        'normal': {'range': (18.5, 24.9), 'color': 'green'},
+        'overweight': {'range': (25, 29.9), 'color': 'yellow'},
+        'obese': {'range': (30, 34.9), 'color': 'orange'},
+        'severely_obese': {'range': (35, 40), 'color': 'red'},
+        'very_severely_obese': {'range': (40, float('inf')), 'color': 'darkred'}
+    }
+
+    for category, details in categories.items():
+        if details['range'][0] <= bmi < details['range'][1]:
+            return details['color']
+
+    return "unknown"
+
+
 @app.route('/fat', methods=['GET'])
 def calculate_fat():
     source_image_url = request.args.get('source_image')
@@ -150,6 +170,7 @@ def calculate_bju():
 
     # Расчет ИМТ
     bmi = weight / ((height / 100) ** 2)
+    color = get_bmi_color(bmi, height, weight)
 
     # Вода, клетчатка, соль и кофеин
     water = lean_mass / 20
@@ -197,6 +218,7 @@ def calculate_bju():
         'fat': round(fat),
         'carbs': round(carbs),
         'bmi': round(bmi, 2),
+        'color': color,
         'water': round(water, 2),
         'caffeine_from': round(caffeine_from, 2), 
         'caffeine_to': round(caffeine_to, 2), 
