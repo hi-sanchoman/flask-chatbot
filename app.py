@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import requests
 import random
+import time
 
 app = Flask(__name__)
 
@@ -96,6 +97,12 @@ def get_bmi_color(bmi, height, weight):
             return details['color']
 
     return "unknown"
+
+
+@app.route('/timestamp', methods=['GET'])
+def get_timestamp():
+    timestamp = int(time.time())  # Get current time in seconds since the Epoch
+    return jsonify({"timestamp": timestamp})
 
 
 @app.route('/fat', methods=['GET'])
